@@ -9,10 +9,16 @@ TBD: Mental model image here
 ## Stack and Notable Packages
 
 - Node (version 20.10 or higher, since it supports env variable without dotenv package)
+- pnpm (version 8.13.1 or higher)
 - Typescript
 - Express
 - Apollo (For GraphQL server)
 - Supabase
+
+## Set up
+
+1. Make sure [node](https://nodejs.org/en) and [pnpm](https://pnpm.io/installation) is installed with described version
+2. run `pnpm install`
 
 ## Authentication
 
