@@ -53,5 +53,5 @@ TBD: Workflow checks for PR are not in place yet. Until then, make sure before e
 
 ## Starting Server
 
-1. Development server: `pnpm run start`, uses nodemon to listent to updates
-2. Production server: `pnpm run start-prod`, uses ts-node
+1. Development server: `pnpm run start`, uses nodemon to listen to updates
+2. Production server: `pnpm run start-prod`, uses tsc to compile and runs compiled code using node
