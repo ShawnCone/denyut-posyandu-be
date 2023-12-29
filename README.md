@@ -8,6 +8,7 @@ TBD: Mental model image here
 
 ## Stack and Notable Packages
 
+- Node (version 20.10 or higher, since it supports env variable without dotenv package)
 - Typescript
 - Express
 - Apollo (For GraphQL server)
