@@ -2,14 +2,15 @@
   "name": "denyut-posyandu-be",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon src/index.ts",
-    "start-prod": "ts-node src/index.ts",
+    "compile": "tsc",
+    "start-prod": "pnpm run compile && node ./dist/index.js",
     "ts:check": "tsc --noEmit",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\"",
-    "check": "npm run ts:check && npm run format && npm run lint"
+    "check": "pnpm run ts:check && pnpm run format && pnpm run lint"
   },
   "keywords": [],
   "author": "",
