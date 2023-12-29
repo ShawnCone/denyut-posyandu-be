@@ -18,6 +18,10 @@ TBD: Mental model image here
 - Authentication is handled by supabase
 - Each authenticated request will create a supabase client, stored in the `context` of graphql resolvers
 
+## Testing
+
+NOT IMPLEMENTED, WILL USE VITEST
+
 ## CI / CD
 
 ### Compilation check
