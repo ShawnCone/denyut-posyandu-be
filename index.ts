@@ -5,16 +5,18 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import cors from 'cors'
 import express from 'express'
 import http from 'http'
-import resolvers from './resolvers/resolvers'
+import resolvers from './src/resolvers/resolvers'
 
 // ...other imports
 import { readFileSync } from 'fs'
-import { AuthContext } from './context/AuthContext'
+import { AuthContext } from './src/context/AuthContext'
 
 // Note: this uses a path relative to the project's
 // root directory, which is the current working directory
 // if the server is executed using `npm run`.
-const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
+const typeDefs = readFileSync('./src/schemas/schema.graphql', {
+  encoding: 'utf-8',
+})
 
 // Set up express and apollo server
 const app = express()

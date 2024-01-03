@@ -9,7 +9,6 @@ const config: CodegenConfig = {
       config: {
         useIndexSignature: true,
         addUnderscoreToArgsType: true,
-
         contextType: '../context/AuthContext#AuthContext', // Path is relative to the generated file
       },
     },

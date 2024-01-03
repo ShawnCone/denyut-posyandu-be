@@ -4,10 +4,10 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
+    "start": "tsx watch index.ts",
     "generate": "graphql-codegen --config codegen.ts && bash scripts/makeResolversStrict.sh",
-    "compile": "npm run generate && tsc",
-    "start-prod": "pnpm run compile && node ./dist/index.js",
+    "compile": "pnpm run generate && tsc",
+    "start-prod": "rm -r ./dist && pnpm run compile && node ./dist/index.js",
     "ts:check": "tsc --noEmit",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -36,10 +36,9 @@
     "@typescript-eslint/parser": "^6.16.0",
     "eslint": "^8.56.0",
     "graphql-codegen-typescript-common": "0.18.2",
-    "nodemon": "^3.0.2",
     "prettier": "^3.1.1",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }
 }

@@ -9,18 +9,6 @@ const resolvers: Resolvers = {
         isEnough: true,
       }
     },
-    weightIsEnough2: async (_, _args, _contextValue) => {
-      return {
-        isEnough: true,
-      }
-    },
-  },
-  Mutation: {
-    // Example
-    someChange: async (_, __, ___) => {
-      // Something
-      return true
-    },
   },
 }
 
