@@ -6,8 +6,7 @@
   "scripts": {
     "start": "tsx watch index.ts",
     "generate": "graphql-codegen --config codegen.ts && bash scripts/makeResolversStrict.sh",
-    "compile": "pnpm run generate && tsc",
-    "start-prod": "rm -r ./dist && pnpm run compile && node ./dist/index.js",
+    "start-prod": "pnpm run generate && tsx index.ts",
     "ts:check": "tsc --noEmit",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\"",

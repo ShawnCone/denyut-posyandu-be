@@ -14,6 +14,7 @@ TBD: Mental model image here
 - Express
 - Apollo (For GraphQL server)
 - Supabase
+- [tsx](https://www.npmjs.com/package/tsx)
 
 ## Set up
 
