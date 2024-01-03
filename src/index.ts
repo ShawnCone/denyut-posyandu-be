@@ -5,75 +5,40 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import cors from 'cors'
 import express from 'express'
 import http from 'http'
+import resolvers from './resolvers/resolvers'
 
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
+// ...other imports
+import { readFileSync } from 'fs'
+import { AuthContext } from './context/AuthContext'
 
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Book {
-    title: String
-    author: String
-  }
+// Note: this uses a path relative to the project's
+// root directory, which is the current working directory
+// if the server is executed using `npm run`.
+const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    books: [Book]
-  }
-`
-
-interface MyContext {
-  token?: string
-}
-
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-]
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-}
-
-// Required logic for integrating with Express
+// Set up express and apollo server
 const app = express()
-// Our httpServer handles incoming requests to our Express app.
-// Below, we tell Apollo Server to "drain" this httpServer,
-// enabling our servers to shut down gracefully.
 const httpServer = http.createServer(app)
-
-// Same ApolloServer initialization as before, plus the drain plugin
-// for our httpServer.
-const server = new ApolloServer<MyContext>({
+const server = new ApolloServer<AuthContext>({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })], // To shut down properly
 })
 // Ensure we wait for our server to start
 await server.start()
 
-// Set up our Express middleware to handle CORS, body parsing,
-// and our expressMiddleware function.
+// Handle cors and use /graphql as entry point for apollo server
 app.use(
   '/graphql',
   cors<cors.CorsRequest>(),
   express.json(),
-  // expressMiddleware accepts the same arguments:
-  // an Apollo Server instance and optional configuration options
   expressMiddleware(server, {
+    // Handle getting token from headers
     context: async ({ req }) => ({ token: req.headers.token }),
   }),
 )
 
+// Healthcheck endpoint
 app.use('/healthcheck', (_req, res) => {
   res.status(200).send('OK')
 })

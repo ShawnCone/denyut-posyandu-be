@@ -23,5 +23,6 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
-  }
+  },
+  "ignorePatterns": ["node_modules", "dist"]
 }

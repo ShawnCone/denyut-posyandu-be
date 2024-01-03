@@ -1,0 +1,11 @@
+type IsEnoughResponse2 {
+  isEnough: Boolean
+}
+
+type Query {
+  weightIsEnough2(recordId: String!): IsEnoughResponse
+}
+
+type Mutation {
+  someChange(recordId: String!): Boolean
+}

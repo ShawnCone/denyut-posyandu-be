@@ -1,0 +1,7 @@
+type IsEnoughResponse {
+  isEnough: Boolean
+}
+
+type Query {
+  weightIsEnough(recordId: String!): IsEnoughResponse
+}
