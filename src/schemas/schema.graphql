@@ -1,7 +1,26 @@
-type IsEnoughResponse {
-  isEnough: Boolean
+enum GrowthType {
+  HEIGHT
+  WEIGHT
+  HEADCIRC
+  ARMCIRC
+}
+
+enum GrowthInterpretationSeverity {
+  NORMAL
+  WARNING
+  SEVERE
+}
+
+type GrowthInterpretationResponse {
+  label: String!
+  severity: GrowthInterpretationSeverity!
+  differenceSincePrevious: Float
+  isEnough: Boolean # For weight only
 }
 
 type Query {
-  weightIsEnough(recordId: String!): IsEnoughResponse
+  growthInterpretation(
+    recordId: String!
+    growthType: GrowthType!
+  ): GrowthInterpretationResponse # Data can be not available
 }
