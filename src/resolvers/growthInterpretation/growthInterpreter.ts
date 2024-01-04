@@ -96,6 +96,7 @@ function getStandardDeviationZone(
 
   return retStandardDeviationZone
 }
+
 function getHeightSeverityAndLabel(inZone: StandardDeviationZone): {
   severity: GrowthInterpretationSeverity
   label: string
@@ -119,7 +120,7 @@ function getHeightSeverityAndLabel(inZone: StandardDeviationZone): {
     default:
       return {
         severity: GrowthInterpretationSeverity.Normal,
-        label: GrowthInterpretationSeverity.Normal,
+        label: 'Normal',
       }
   }
 }
@@ -127,95 +128,67 @@ function getHeightSeverityAndLabel(inZone: StandardDeviationZone): {
 function getWeightSeverityAndLabel(
   inZone: StandardDeviationZone,
 ): GrowthInterpreterOutput {
-  switch (inZone) {
-    case '> SD3':
-      return {
-        severity: GrowthInterpretationSeverity.Severe,
-        label: 'Berat Badan Lebih',
-      }
-    case 'SD2 - SD3':
-      return {
-        severity: GrowthInterpretationSeverity.Warning,
-        label: 'Berat Badan Lebih Sedikit',
-      }
-    case 'SD1 - SD2':
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: 'Berat Normal Lebih',
-      }
-    case 'SD0 - SD1':
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: 'Berat Normal',
-      }
-    case 'SD1neg - SD0':
-      return {
-        severity: GrowthInterpretationSeverity.Warning,
-        label: 'Berat Badan Kurang Sedikit',
-      }
-    case 'SD2neg - SD1neg':
-      return {
-        severity: GrowthInterpretationSeverity.Warning,
-        label: 'Berat Badan Kurang',
-      }
-    case '< SD3neg':
-      return {
-        severity: GrowthInterpretationSeverity.Severe,
-        label: 'Berat Badan Sangat Kurang',
-      }
-    default:
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: GrowthInterpretationSeverity.Normal,
-      }
+  if (inZone === '> SD3' || inZone === 'SD2 - SD3') {
+    return {
+      severity: GrowthInterpretationSeverity.Severe,
+      label: 'Berat Badan Lebih',
+    }
+  }
+
+  if (inZone === 'SD1 - SD2') {
+    return {
+      severity: GrowthInterpretationSeverity.Normal,
+      label: 'Berat Normal Lebih',
+    }
+  }
+
+  if (inZone === 'SD0 - SD1' || inZone === 'SD1neg - SD0') {
+    return {
+      severity: GrowthInterpretationSeverity.Normal,
+      label: 'Berat Normal',
+    }
+  }
+
+  if (inZone === 'SD2neg - SD1neg') {
+    return {
+      severity: GrowthInterpretationSeverity.Normal,
+      label: 'Berat Cukup',
+    }
+  }
+
+  if (inZone === 'SD3neg - SD2neg') {
+    return {
+      severity: GrowthInterpretationSeverity.Warning,
+      label: 'Kurang Gizi Ringan',
+    }
+  }
+
+  return {
+    severity: GrowthInterpretationSeverity.Severe,
+    label: 'Bawah Garis Merah (BGM)',
   }
 }
+
 function getHeadCircumferenceSeverityAndLabel(
   inZone: StandardDeviationZone,
 ): GrowthInterpreterOutput {
-  switch (inZone) {
-    case '> SD3':
-      return {
-        severity: GrowthInterpretationSeverity.Severe,
-        label: 'Lingkar Kepala Lebih',
-      }
-    case 'SD2 - SD3':
-      return {
-        severity: GrowthInterpretationSeverity.Warning,
-        label: 'Lingkar Kepala Lebih Sedikit',
-      }
-    case 'SD1 - SD2':
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: 'Lingkar Kepala Normal Lebih',
-      }
-    case 'SD0 - SD1':
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: 'Lingkar Kepala Normal',
-      }
-    case 'SD1neg - SD0':
-      return {
-        severity: GrowthInterpretationSeverity.Warning,
-        label: 'Lingkar Kepala Kurang Sedikit',
-      }
-    case 'SD2neg - SD1neg':
-      return {
-        severity: GrowthInterpretationSeverity.Warning,
-        label: 'Lingkar Kepala Kurang',
-      }
-    case '< SD3neg':
-      return {
-        severity: GrowthInterpretationSeverity.Severe,
-        label: 'Lingkar Kepala Sangat Kurang',
-      }
-    default:
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: GrowthInterpretationSeverity.Normal,
-      }
+  // Defaults
+  let severity: GrowthInterpretationSeverity =
+    GrowthInterpretationSeverity.Normal
+  let label = 'Normosefal'
+
+  if (inZone === '> SD3' || inZone === 'SD2 - SD3') {
+    severity = GrowthInterpretationSeverity.Severe
+    label = 'Makrosefal'
   }
+
+  if (inZone === 'SD3neg - SD2neg' || inZone === '< SD3neg') {
+    severity = GrowthInterpretationSeverity.Severe
+    label = 'Mikrosefal'
+  }
+  return { severity, label }
 }
+
 function getArmCircumferenceSeverityAndLabel(
   inZone: StandardDeviationZone,
 ): GrowthInterpreterOutput {
@@ -223,42 +196,28 @@ function getArmCircumferenceSeverityAndLabel(
     case '> SD3':
       return {
         severity: GrowthInterpretationSeverity.Severe,
-        label: 'Lingkar Lengan Lebih',
+        label: 'Sangat lebar',
       }
     case 'SD2 - SD3':
       return {
         severity: GrowthInterpretationSeverity.Warning,
-        label: 'Lingkar Lengan Lebih Sedikit',
+        label: 'Cukup lebar',
       }
-    case 'SD1 - SD2':
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: 'Lingkar Lengan Normal Lebih',
-      }
-    case 'SD0 - SD1':
-      return {
-        severity: GrowthInterpretationSeverity.Normal,
-        label: 'Lingkar Lengan Normal',
-      }
-    case 'SD1neg - SD0':
+
+    case 'SD3neg - SD2neg':
       return {
         severity: GrowthInterpretationSeverity.Warning,
-        label: 'Lingkar Lengan Kurang Sedikit',
-      }
-    case 'SD2neg - SD1neg':
-      return {
-        severity: GrowthInterpretationSeverity.Warning,
-        label: 'Lingkar Lengan Kurang',
+        label: 'Cukup sempit',
       }
     case '< SD3neg':
       return {
         severity: GrowthInterpretationSeverity.Severe,
-        label: 'Lingkar Lengan Sangat Kurang',
+        label: 'Sangat sempit',
       }
     default:
       return {
         severity: GrowthInterpretationSeverity.Normal,
-        label: GrowthInterpretationSeverity.Normal,
+        label: 'Normal',
       }
   }
 }
