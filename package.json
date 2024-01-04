@@ -12,7 +12,7 @@
     "check:ts": "tsc --noEmit",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\"",
-    "check": "pnpm run check:ts && pnpm run format && pnpm run lint",
+    "check": "pnpm run check:ts && pnpm run format && pnpm run lint && vitest run",
     "test": "vitest"
   },
   "keywords": [],

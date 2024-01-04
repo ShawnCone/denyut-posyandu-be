@@ -1,4 +1,4 @@
-import { Resolvers } from '../../generated/graphql'
+import { GrowthType, Resolvers } from '../../generated/graphql'
 import { checkTokenExists } from '../errors'
 import { getSupabaseClient } from '../utils/supabase'
 import {
@@ -6,6 +6,7 @@ import {
   getKidAgeInMonths,
 } from './growthInterpreter'
 import { getMaybePreviousMeasurementRecord, getRecordInfo } from './queries'
+import { getWeightIncreaseIsEnough } from './weightEnoughEvaluator'
 
 const resolver: Resolvers['Query']['growthInterpretation'] = async (
   _,
@@ -55,12 +56,19 @@ const resolver: Resolvers['Query']['growthInterpretation'] = async (
       : recordInfo.measurementValue - previousMeasurementValue
 
   // If weight, check isEnough
+  const isEnough =
+    growthType === GrowthType.Weight && diff !== null
+      ? getWeightIncreaseIsEnough({
+          weightIncrease: diff,
+          monthOld: kidAgeInMonths,
+        })
+      : null
 
   return {
     label: labelAndSeverity.label,
     severity: labelAndSeverity.severity,
-    isEnough: true,
-    diff: diff,
+    isEnough: isEnough,
+    differenceSincePrevious: diff,
   }
 }
 
