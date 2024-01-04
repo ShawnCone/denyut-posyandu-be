@@ -1,6 +1,7 @@
 import { GrowthType } from '../../generated/graphql'
 import { DATA_NOT_FOUND_ERROR, UNABLE_TO_FETCH_DATA_ERROR } from '../errors'
 import { DenyutPosyanduSupabaseClient } from '../utils/supabase'
+import { getPreviousMonthIdxAndYear } from './utils'
 
 type MeasurementRecordValues = {
   height: number
@@ -60,4 +61,40 @@ export async function getRecordInfo({
     kidInfo: recordInfo.KidInfo,
     measurementValue,
   }
+}
+
+type GetMaybePreviousMeasurementRecordParams = {
+  supabase: DenyutPosyanduSupabaseClient
+  outpostRecordMonthIdx: number
+  outpostRecordYear: number
+  growthType: GrowthType
+}
+
+export async function getMaybePreviousMeasurementRecord({
+  supabase,
+  outpostRecordMonthIdx,
+  outpostRecordYear,
+  growthType,
+}: GetMaybePreviousMeasurementRecordParams): Promise<number | null> {
+  const { monthIdx: previousMonthIdx, year: previousYear } =
+    getPreviousMonthIdxAndYear(outpostRecordMonthIdx, outpostRecordYear)
+
+  const { data: previousRecord, error } = await supabase
+    .from('KidBodilyGrowth')
+    .select('height, weight, armCirc, headCirc')
+    .eq('outpostRecordMonthIdx', previousMonthIdx)
+    .eq('outpostRecordYear', previousYear)
+    .maybeSingle()
+
+  if (error) {
+    throw UNABLE_TO_FETCH_DATA_ERROR
+  }
+
+  if (!previousRecord) {
+    return null
+  }
+
+  const measurementValue = getRecordMeasurementValue(growthType, previousRecord)
+
+  return measurementValue
 }

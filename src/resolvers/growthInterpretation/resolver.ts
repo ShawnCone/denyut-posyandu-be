@@ -5,7 +5,7 @@ import {
   getGrowthLabelAndSeverity,
   getKidAgeInMonths,
 } from './growthInterpreter'
-import { getRecordInfo } from './queries'
+import { getMaybePreviousMeasurementRecord, getRecordInfo } from './queries'
 
 const resolver: Resolvers['Query']['growthInterpretation'] = async (
   _,
@@ -42,13 +42,25 @@ const resolver: Resolvers['Query']['growthInterpretation'] = async (
   if (labelAndSeverity === null) return null
 
   // Get previous month record and calculate diff (if applicable) (Use outpost month and year - 1)
+  const previousMeasurementValue = await getMaybePreviousMeasurementRecord({
+    supabase,
+    outpostRecordMonthIdx: recordInfo.outpostRecordMonthIdx,
+    outpostRecordYear: recordInfo.outpostRecordYear,
+    growthType,
+  })
+
+  const diff =
+    previousMeasurementValue === null
+      ? null
+      : recordInfo.measurementValue - previousMeasurementValue
+
   // If weight, check isEnough
 
   return {
     label: labelAndSeverity.label,
     severity: labelAndSeverity.severity,
     isEnough: true,
-    diff: 0,
+    diff: diff,
   }
 }
 
