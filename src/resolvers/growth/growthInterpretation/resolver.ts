@@ -1,11 +1,11 @@
-import { GrowthType, Resolvers } from '../../generated/graphql'
-import { checkTokenExists } from '../errors'
-import { getSupabaseClient } from '../utils/supabase'
+import { GrowthType, Resolvers } from '../../../generated/graphql'
+import { checkTokenExists } from '../../errors'
+import { getSupabaseClient } from '../../utils/supabase'
+import { getMaybePreviousMeasurementRecord, getRecordInfo } from '../queries'
 import {
   getGrowthLabelAndSeverity,
   getKidAgeInMonths,
 } from './growthInterpreter'
-import { getMaybePreviousMeasurementRecord, getRecordInfo } from './queries'
 import { getWeightIncreaseIsEnough } from './weightEnoughEvaluator'
 
 const resolver: Resolvers['Query']['growthInterpretation'] = async (

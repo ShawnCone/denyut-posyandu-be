@@ -1,7 +1,7 @@
 import { GrowthType } from '../../generated/graphql'
 import { DATA_NOT_FOUND_ERROR, UNABLE_TO_FETCH_DATA_ERROR } from '../errors'
 import { DenyutPosyanduSupabaseClient } from '../utils/supabase'
-import { getPreviousMonthIdxAndYear } from './utils'
+import { getPreviousMonthIdxAndYear } from './growthInterpretation/utils'
 
 type MeasurementRecordValues = {
   height: number

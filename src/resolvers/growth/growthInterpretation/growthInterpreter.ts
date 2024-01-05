@@ -2,15 +2,15 @@ import { differenceInCalendarMonths } from 'date-fns'
 import {
   GrowthInterpretationSeverity,
   GrowthType,
-} from '../../generated/graphql'
-import { Database } from '../../generated/supabase'
-import { INVALID_MONTH_OLD_ERROR } from '../errors'
+} from '../../../generated/graphql'
+import { INVALID_MONTH_OLD_ERROR } from '../../errors'
+import { SexType } from '../../utils/supabase'
 import {
   GROWTH_STDEV_DATA_OBJECT,
   GrowthStandardDeviationLevel,
   GrowthStandardDeviationsMap,
   ValidAgeInMonths,
-} from './growthSTDEVData'
+} from '../growthSTDEVData'
 
 function getValidAgeInMonths(ageInMonths: number): ValidAgeInMonths {
   if (ageInMonths < 0) {
@@ -23,7 +23,7 @@ function getValidAgeInMonths(ageInMonths: number): ValidAgeInMonths {
 }
 
 type GetSpecificStandardDataParams = {
-  sex: Database['public']['Enums']['sex_enum']
+  sex: SexType
   ageInMonths: number
   growthType: GrowthType
 }
@@ -241,7 +241,7 @@ type GrowthInterpreterOutput = {
 export function getGrowthLabelAndSeverity(
   ageInMonths: number,
   growthType: GrowthType,
-  sex: Database['public']['Enums']['sex_enum'],
+  sex: SexType,
   measurementValue: number,
 ): GrowthInterpreterOutput | null {
   // Get specific standard data

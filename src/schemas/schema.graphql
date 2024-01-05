@@ -18,9 +18,30 @@ type GrowthInterpretationResponse {
   isEnough: Boolean # For weight only
 }
 
+type SingleMonthGrowthData {
+  ageInMonths: Int!
+  SD0: Float!
+  SD1: Float!
+  SD2: Float!
+  SD3: Float!
+  SD1neg: Float!
+  SD2neg: Float!
+  SD3neg: Float!
+}
+
+type GrowthGraphStandardDataResponse {
+  standardData: [SingleMonthGrowthData!]!
+  measurementValue: Float!
+  measurementMonthOld: Int!
+}
+
 type Query {
   growthInterpretation(
     recordId: String!
     growthType: GrowthType!
   ): GrowthInterpretationResponse # Data can be not available
+  growthGraphStandardData(
+    recordId: String!
+    growthType: GrowthType!
+  ): GrowthGraphStandardDataResponse # Data can be not available
 }

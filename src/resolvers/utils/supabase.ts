@@ -24,3 +24,6 @@ export function getSupabaseClient(
     },
   })
 }
+
+// Common supabase types
+export type SexType = Database['public']['Enums']['sex_enum']

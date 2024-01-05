@@ -2,7 +2,7 @@
 // Sex -> Month -> Growth Type -> SD0, SD1, SD2, SD3, SD1neg, SD2neg, SD3neg
 
 import { GrowthType } from '../../generated/graphql'
-import { Database } from '../../generated/supabase'
+import { SexType } from '../utils/supabase'
 
 export type GrowthStandardDeviationLevel =
   | 'SD0'
@@ -92,7 +92,7 @@ type MonthlyGrowthStandardData = {
 }
 
 type SexIndexedGrowthStandardData = {
-  [key in Database['public']['Enums']['sex_enum']]: MonthlyGrowthStandardData
+  [key in SexType]: MonthlyGrowthStandardData
 }
 
 export const GROWTH_STDEV_DATA_OBJECT: SexIndexedGrowthStandardData = {
