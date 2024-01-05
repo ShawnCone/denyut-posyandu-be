@@ -36,7 +36,7 @@ app.use(
   express.json(),
   expressMiddleware(server, {
     // Handle getting token from headers
-    context: async ({ req }) => ({ token: req.headers.token }),
+    context: async ({ req }) => ({ token: req.headers.authorization }),
   }),
 )
 

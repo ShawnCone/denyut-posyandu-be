@@ -84,6 +84,7 @@ export async function getMaybePreviousMeasurementRecord({
     .select('height, weight, armCirc, headCirc')
     .eq('outpostRecordMonthIdx', previousMonthIdx)
     .eq('outpostRecordYear', previousYear)
+    .limit(1)
     .maybeSingle()
 
   if (error) {
