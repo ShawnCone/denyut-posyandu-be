@@ -45,7 +45,17 @@ app.use('/healthcheck', (_req, res) => {
   res.status(200).send('OK')
 })
 
-const port = process.env.PORT
+const port = process.env.PORT || 3000
+const host = '0.0.0.0'
+
 // Modified server startup
-await new Promise<void>(resolve => httpServer.listen({ port }, resolve))
-console.log(`🚀 Server ready at http://localhost:${port}/`)
+await new Promise<void>(resolve =>
+  httpServer.listen(
+    {
+      port,
+      host,
+    },
+    resolve,
+  ),
+)
+console.log(`🚀 Server ready at http://${host}:${port}`)
