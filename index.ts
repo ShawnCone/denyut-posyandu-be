@@ -25,6 +25,7 @@ const server = new ApolloServer<AuthContext>({
   typeDefs,
   resolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })], // To shut down properly
+  introspection: true, // Enable instropection at all times, might need to change if necessary later
 })
 // Ensure we wait for our server to start
 await server.start()
