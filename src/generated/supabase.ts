@@ -21,7 +21,7 @@ export interface Database {
           name: string
           photoURL: string | null
           religion: string | null
-          sex: Database["public"]["Enums"]["sex_enum"]
+          sex: Database['public']['Enums']['sex_enum']
         }
         Insert: {
           address?: string | null
@@ -34,7 +34,7 @@ export interface Database {
           name?: string
           photoURL?: string | null
           religion?: string | null
-          sex: Database["public"]["Enums"]["sex_enum"]
+          sex: Database['public']['Enums']['sex_enum']
         }
         Update: {
           address?: string | null
@@ -47,23 +47,23 @@ export interface Database {
           name?: string
           photoURL?: string | null
           religion?: string | null
-          sex?: Database["public"]["Enums"]["sex_enum"]
+          sex?: Database['public']['Enums']['sex_enum']
         }
         Relationships: [
           {
-            foreignKeyName: "AccountInfo_id_fkey"
-            columns: ["id"]
+            foreignKeyName: 'AccountInfo_id_fkey'
+            columns: ['id']
             isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
+            referencedRelation: 'users'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "AccountInfo_id_fkey"
-            columns: ["id"]
+            foreignKeyName: 'AccountInfo_id_fkey'
+            columns: ['id']
             isOneToOne: true
-            referencedRelation: "usersphone"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'usersphone'
+            referencedColumns: ['id']
+          },
         ]
       }
       KidBodilyGrowth: {
@@ -108,19 +108,19 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "KidBodilyGrowth_createdBy_fkey"
-            columns: ["createdBy"]
+            foreignKeyName: 'KidBodilyGrowth_createdBy_fkey'
+            columns: ['createdBy']
             isOneToOne: false
-            referencedRelation: "AccountInfo"
-            referencedColumns: ["id"]
+            referencedRelation: 'AccountInfo'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "KidBodilyGrowth_kidId_fkey"
-            columns: ["kidId"]
+            foreignKeyName: 'KidBodilyGrowth_kidId_fkey'
+            columns: ['kidId']
             isOneToOne: false
-            referencedRelation: "KidInfo"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'KidInfo'
+            referencedColumns: ['id']
+          },
         ]
       }
       KidImmunization: {
@@ -156,19 +156,19 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "KidImmunization_createdBy_fkey"
-            columns: ["createdBy"]
+            foreignKeyName: 'KidImmunization_createdBy_fkey'
+            columns: ['createdBy']
             isOneToOne: false
-            referencedRelation: "AccountInfo"
-            referencedColumns: ["id"]
+            referencedRelation: 'AccountInfo'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "KidImmunization_kidId_fkey"
-            columns: ["kidId"]
+            foreignKeyName: 'KidImmunization_kidId_fkey'
+            columns: ['kidId']
             isOneToOne: false
-            referencedRelation: "KidInfo"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'KidInfo'
+            referencedColumns: ['id']
+          },
         ]
       }
       KidInfo: {
@@ -185,7 +185,7 @@ export interface Database {
           motherName: string | null
           name: string
           photoURL: string | null
-          sex: Database["public"]["Enums"]["sex_enum"]
+          sex: Database['public']['Enums']['sex_enum']
         }
         Insert: {
           birthCity: string
@@ -200,7 +200,7 @@ export interface Database {
           motherName?: string | null
           name: string
           photoURL?: string | null
-          sex: Database["public"]["Enums"]["sex_enum"]
+          sex: Database['public']['Enums']['sex_enum']
         }
         Update: {
           birthCity?: string
@@ -215,7 +215,7 @@ export interface Database {
           motherName?: string | null
           name?: string
           photoURL?: string | null
-          sex?: Database["public"]["Enums"]["sex_enum"]
+          sex?: Database['public']['Enums']['sex_enum']
         }
         Relationships: []
       }
@@ -273,26 +273,26 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "OutpostKids_kidId_fkey"
-            columns: ["kidId"]
+            foreignKeyName: 'OutpostKids_kidId_fkey'
+            columns: ['kidId']
             isOneToOne: false
-            referencedRelation: "KidInfo"
-            referencedColumns: ["id"]
+            referencedRelation: 'KidInfo'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "OutpostKids_outpostId_fkey"
-            columns: ["outpostId"]
+            foreignKeyName: 'OutpostKids_outpostId_fkey'
+            columns: ['outpostId']
             isOneToOne: false
-            referencedRelation: "OutpostInfo"
-            referencedColumns: ["id"]
+            referencedRelation: 'OutpostInfo'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "OutpostKids_submittedById_fkey"
-            columns: ["submittedById"]
+            foreignKeyName: 'OutpostKids_submittedById_fkey'
+            columns: ['submittedById']
             isOneToOne: false
-            referencedRelation: "AccountInfo"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'AccountInfo'
+            referencedColumns: ['id']
+          },
         ]
       }
       OutpostMembership: {
@@ -300,41 +300,41 @@ export interface Database {
           accountId: string
           createdAt: string | null
           outpostId: string
-          role: Database["public"]["Enums"]["membership_role_enum"]
+          role: Database['public']['Enums']['membership_role_enum']
           role_old: string | null
-          status: Database["public"]["Enums"]["membership_status_enum"]
+          status: Database['public']['Enums']['membership_status_enum']
         }
         Insert: {
           accountId: string
           createdAt?: string | null
           outpostId: string
-          role?: Database["public"]["Enums"]["membership_role_enum"]
+          role?: Database['public']['Enums']['membership_role_enum']
           role_old?: string | null
-          status?: Database["public"]["Enums"]["membership_status_enum"]
+          status?: Database['public']['Enums']['membership_status_enum']
         }
         Update: {
           accountId?: string
           createdAt?: string | null
           outpostId?: string
-          role?: Database["public"]["Enums"]["membership_role_enum"]
+          role?: Database['public']['Enums']['membership_role_enum']
           role_old?: string | null
-          status?: Database["public"]["Enums"]["membership_status_enum"]
+          status?: Database['public']['Enums']['membership_status_enum']
         }
         Relationships: [
           {
-            foreignKeyName: "OutpostMembership_accountId_fkey"
-            columns: ["accountId"]
+            foreignKeyName: 'OutpostMembership_accountId_fkey'
+            columns: ['accountId']
             isOneToOne: false
-            referencedRelation: "AccountInfo"
-            referencedColumns: ["id"]
+            referencedRelation: 'AccountInfo'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "OutpostMembership_outpostId_fkey"
-            columns: ["outpostId"]
+            foreignKeyName: 'OutpostMembership_outpostId_fkey'
+            columns: ['outpostId']
             isOneToOne: false
-            referencedRelation: "OutpostInfo"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'OutpostInfo'
+            referencedColumns: ['id']
+          },
         ]
       }
     }
@@ -392,9 +392,9 @@ export interface Database {
       }
     }
     Enums: {
-      membership_role_enum: "owner" | "member"
-      membership_status_enum: "pending" | "approved"
-      sex_enum: "male" | "female"
+      membership_role_enum: 'owner' | 'member'
+      membership_status_enum: 'pending' | 'approved'
+      sex_enum: 'male' | 'female'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -404,80 +404,80 @@ export interface Database {
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (Database['public']['Tables'] & Database['public']['Views'])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+        Database[PublicTableNameOrOptions['schema']]['Views'])
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
+  : PublicTableNameOrOptions extends keyof (Database['public']['Tables'] &
+        Database['public']['Views'])
+    ? (Database['public']['Tables'] &
+        Database['public']['Views'])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
     : never
-  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof Database['public']['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
+  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
+    ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
     : never
-  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof Database['public']['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
+  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
+    ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
     : never
-  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof Database['public']['Enums']
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof Database['public']['Enums']
+    ? Database['public']['Enums'][PublicEnumNameOrOptions]
+    : never

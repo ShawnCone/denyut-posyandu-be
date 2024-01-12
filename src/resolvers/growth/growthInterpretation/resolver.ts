@@ -1,4 +1,4 @@
-import { GrowthType, Resolvers } from '../../../generated/graphql'
+import { Resolvers } from '../../../generated/graphql'
 import { checkTokenExists } from '../../errors'
 import { getSupabaseClient } from '../../utils/supabase'
 import { getMaybePreviousMeasurementRecord, getRecordInfo } from '../queries'
@@ -6,7 +6,6 @@ import {
   getGrowthLabelAndSeverity,
   getKidAgeInMonths,
 } from './growthInterpreter'
-import { getWeightIncreaseIsEnough } from './weightEnoughEvaluator'
 
 const resolver: Resolvers['Query']['growthInterpretation'] = async (
   _,
@@ -43,7 +42,7 @@ const resolver: Resolvers['Query']['growthInterpretation'] = async (
   if (labelAndSeverity === null) return null
 
   // Get previous month record and calculate diff (if applicable) (Use outpost month and year - 1)
-  const previousMeasurementValue = await getMaybePreviousMeasurementRecord({
+  const previousMeasurementData = await getMaybePreviousMeasurementRecord({
     supabase,
     outpostRecordMonthIdx: recordInfo.outpostRecordMonthIdx,
     outpostRecordYear: recordInfo.outpostRecordYear,
@@ -51,24 +50,15 @@ const resolver: Resolvers['Query']['growthInterpretation'] = async (
   })
 
   const diff =
-    previousMeasurementValue === null
+    previousMeasurementData === null
       ? null
-      : recordInfo.measurementValue - previousMeasurementValue
-
-  // If weight, check isEnough
-  const isEnough =
-    growthType === GrowthType.Weight && diff !== null
-      ? getWeightIncreaseIsEnough({
-          weightIncrease: diff,
-          monthOld: kidAgeInMonths,
-        })
-      : null
+      : recordInfo.measurementValue - previousMeasurementData.measurementValue
 
   return {
     label: labelAndSeverity.label,
     severity: labelAndSeverity.severity,
-    isEnough: isEnough,
     differenceSincePrevious: diff,
+    previousMeasurementData: previousMeasurementData,
   }
 }
 

@@ -1,4 +1,7 @@
-import { GrowthType } from '../../generated/graphql'
+import {
+  GrowthType,
+  PreviousGrowthMeasurementData,
+} from '../../generated/graphql'
 import { DATA_NOT_FOUND_ERROR, UNABLE_TO_FETCH_DATA_ERROR } from '../errors'
 import { DenyutPosyanduSupabaseClient } from '../utils/supabase'
 import { getPreviousMonthIdxAndYear } from './growthInterpretation/utils'
@@ -75,13 +78,13 @@ export async function getMaybePreviousMeasurementRecord({
   outpostRecordMonthIdx,
   outpostRecordYear,
   growthType,
-}: GetMaybePreviousMeasurementRecordParams): Promise<number | null> {
+}: GetMaybePreviousMeasurementRecordParams): Promise<PreviousGrowthMeasurementData | null> {
   const { monthIdx: previousMonthIdx, year: previousYear } =
     getPreviousMonthIdxAndYear(outpostRecordMonthIdx, outpostRecordYear)
 
   const { data: previousRecord, error } = await supabase
     .from('KidBodilyGrowth')
-    .select('height, weight, armCirc, headCirc')
+    .select('height, weight, armCirc, headCirc, measurementDate')
     .eq('outpostRecordMonthIdx', previousMonthIdx)
     .eq('outpostRecordYear', previousYear)
     .limit(1)
@@ -97,5 +100,12 @@ export async function getMaybePreviousMeasurementRecord({
 
   const measurementValue = getRecordMeasurementValue(growthType, previousRecord)
 
-  return measurementValue
+  if (measurementValue === null) {
+    return null
+  }
+
+  return {
+    measurementDate: previousRecord.measurementDate,
+    measurementValue,
+  }
 }

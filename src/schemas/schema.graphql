@@ -11,11 +11,15 @@ enum GrowthInterpretationSeverity {
   SEVERE
 }
 
+type PreviousGrowthMeasurementData {
+  measurementValue: Float!
+  measurementDate: String!
+}
+
 type GrowthInterpretationResponse {
   label: String!
   severity: GrowthInterpretationSeverity!
-  differenceSincePrevious: Float
-  isEnough: Boolean # For weight only
+  previousMeasurementData: PreviousGrowthMeasurementData
 }
 
 type SingleMonthGrowthData {
