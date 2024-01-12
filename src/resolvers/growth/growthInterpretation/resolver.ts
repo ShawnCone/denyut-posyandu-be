@@ -49,15 +49,9 @@ const resolver: Resolvers['Query']['growthInterpretation'] = async (
     growthType,
   })
 
-  const diff =
-    previousMeasurementData === null
-      ? null
-      : recordInfo.measurementValue - previousMeasurementData.measurementValue
-
   return {
     label: labelAndSeverity.label,
     severity: labelAndSeverity.severity,
-    differenceSincePrevious: diff,
     previousMeasurementData: previousMeasurementData,
   }
 }
