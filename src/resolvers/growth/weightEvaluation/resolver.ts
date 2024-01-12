@@ -44,13 +44,14 @@ const resolver: Resolvers['Query']['weightGrowthEvaluation'] = async (
 
   if (previousMeasurementData === null) return null
 
-  const increaseInWeight =
-    recordInfo.measurementValue - previousMeasurementData.measurementValue
+  const increaseInWeightGrams =
+    recordInfo.measurementValue * 1000 -
+    previousMeasurementData.measurementValue * 1000
 
   // Get the standard data given kid age month plus minus 5 months
   return {
-    increaseInWeight,
-    isEnough: increaseInWeight >= targetIncrease,
+    increaseInWeight: increaseInWeightGrams,
+    isEnough: increaseInWeightGrams >= targetIncrease,
     targetIncrease,
   }
 }
