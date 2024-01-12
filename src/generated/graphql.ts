@@ -69,6 +69,7 @@ export type Query = {
   __typename?: 'Query'
   growthGraphStandardData?: Maybe<GrowthGraphStandardDataResponse>
   growthInterpretation?: Maybe<GrowthInterpretationResponse>
+  weightGrowthEvaluation?: Maybe<WeightGrowthEvaluationResponse>
 }
 
 export type Query_GrowthGraphStandardDataArgs = {
@@ -78,6 +79,10 @@ export type Query_GrowthGraphStandardDataArgs = {
 
 export type Query_GrowthInterpretationArgs = {
   growthType: GrowthType
+  recordId: Scalars['String']['input']
+}
+
+export type Query_WeightGrowthEvaluationArgs = {
   recordId: Scalars['String']['input']
 }
 
@@ -91,6 +96,13 @@ export type SingleMonthGrowthData = {
   SD3: Scalars['Float']['output']
   SD3neg: Scalars['Float']['output']
   ageInMonths: Scalars['Int']['output']
+}
+
+export type WeightGrowthEvaluationResponse = {
+  __typename?: 'WeightGrowthEvaluationResponse'
+  increaseInWeight: Scalars['Float']['output']
+  isEnough: Scalars['Boolean']['output']
+  targetIncrease: Scalars['Float']['output']
 }
 
 export type WithIndex<TObject> = TObject & Record<string, any>
@@ -214,6 +226,7 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>
   SingleMonthGrowthData: ResolverTypeWrapper<SingleMonthGrowthData>
   String: ResolverTypeWrapper<Scalars['String']['output']>
+  WeightGrowthEvaluationResponse: ResolverTypeWrapper<WeightGrowthEvaluationResponse>
 }>
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -227,6 +240,7 @@ export type ResolversParentTypes = ResolversObject<{
   Query: {}
   SingleMonthGrowthData: SingleMonthGrowthData
   String: Scalars['String']['output']
+  WeightGrowthEvaluationResponse: WeightGrowthEvaluationResponse
 }>
 
 export type GrowthGraphStandardDataResponseResolvers<
@@ -290,6 +304,12 @@ export type QueryResolvers<
     ContextType,
     RequireFields<Query_GrowthInterpretationArgs, 'growthType' | 'recordId'>
   >
+  weightGrowthEvaluation: Resolver<
+    Maybe<ResolversTypes['WeightGrowthEvaluationResponse']>,
+    ParentType,
+    ContextType,
+    RequireFields<Query_WeightGrowthEvaluationArgs, 'recordId'>
+  >
 }>
 
 export type SingleMonthGrowthDataResolvers<
@@ -308,10 +328,22 @@ export type SingleMonthGrowthDataResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type WeightGrowthEvaluationResponseResolvers<
+  ContextType = AuthContext,
+  ParentType extends
+    ResolversParentTypes['WeightGrowthEvaluationResponse'] = ResolversParentTypes['WeightGrowthEvaluationResponse'],
+> = ResolversObject<{
+  increaseInWeight?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  isEnough?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  targetIncrease?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export type Resolvers<ContextType = AuthContext> = ResolversObject<{
   GrowthGraphStandardDataResponse?: GrowthGraphStandardDataResponseResolvers<ContextType>
   GrowthInterpretationResponse?: GrowthInterpretationResponseResolvers<ContextType>
   PreviousGrowthMeasurementData?: PreviousGrowthMeasurementDataResolvers<ContextType>
   Query: QueryResolvers<ContextType>
   SingleMonthGrowthData?: SingleMonthGrowthDataResolvers<ContextType>
+  WeightGrowthEvaluationResponse?: WeightGrowthEvaluationResponseResolvers<ContextType>
 }>

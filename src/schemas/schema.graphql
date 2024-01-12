@@ -39,6 +39,12 @@ type GrowthGraphStandardDataResponse {
   measurementMonthOld: Int!
 }
 
+type WeightGrowthEvaluationResponse {
+  increaseInWeight: Float!
+  isEnough: Boolean!
+  targetIncrease: Float!
+}
+
 type Query {
   growthInterpretation(
     recordId: String!
@@ -48,4 +54,5 @@ type Query {
     recordId: String!
     growthType: GrowthType!
   ): GrowthGraphStandardDataResponse # Data can be not available
+  weightGrowthEvaluation(recordId: String!): WeightGrowthEvaluationResponse
 }
