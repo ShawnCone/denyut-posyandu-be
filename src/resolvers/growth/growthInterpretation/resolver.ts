@@ -47,6 +47,7 @@ const resolver: Resolvers['Query']['growthInterpretation'] = async (
     outpostRecordMonthIdx: recordInfo.outpostRecordMonthIdx,
     outpostRecordYear: recordInfo.outpostRecordYear,
     growthType,
+    kidId: recordInfo.kidInfo.id,
   })
 
   return {

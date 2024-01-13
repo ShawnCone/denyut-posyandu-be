@@ -42,7 +42,7 @@ export async function getRecordInfo({
   const { data: recordInfo, error } = await supabase
     .from('KidBodilyGrowth')
     .select(
-      'outpostRecordMonthIdx, outpostRecordYear, measurementDate, height, weight, armCirc, headCirc, KidInfo(dateOfBirth, sex)',
+      'outpostRecordMonthIdx, outpostRecordYear, measurementDate, height, weight, armCirc, headCirc, KidInfo(dateOfBirth, sex, id)',
     )
     .eq('recordId', recordId)
     .single()
@@ -71,6 +71,7 @@ type GetMaybePreviousMeasurementRecordParams = {
   outpostRecordMonthIdx: number
   outpostRecordYear: number
   growthType: GrowthType
+  kidId: string
 }
 
 export async function getMaybePreviousMeasurementRecord({
@@ -78,6 +79,7 @@ export async function getMaybePreviousMeasurementRecord({
   outpostRecordMonthIdx,
   outpostRecordYear,
   growthType,
+  kidId,
 }: GetMaybePreviousMeasurementRecordParams): Promise<PreviousGrowthMeasurementData | null> {
   const { monthIdx: previousMonthIdx, year: previousYear } =
     getPreviousMonthIdxAndYear(outpostRecordMonthIdx, outpostRecordYear)
@@ -87,6 +89,7 @@ export async function getMaybePreviousMeasurementRecord({
     .select('height, weight, armCirc, headCirc, measurementDate')
     .eq('outpostRecordMonthIdx', previousMonthIdx)
     .eq('outpostRecordYear', previousYear)
+    .eq('kidId', kidId)
     .limit(1)
     .maybeSingle()
 

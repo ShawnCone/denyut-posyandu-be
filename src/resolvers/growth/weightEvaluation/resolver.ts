@@ -40,6 +40,7 @@ const resolver: Resolvers['Query']['weightGrowthEvaluation'] = async (
     outpostRecordMonthIdx: recordInfo.outpostRecordMonthIdx,
     outpostRecordYear: recordInfo.outpostRecordYear,
     growthType: GrowthType.Weight,
+    kidId: recordInfo.kidInfo.id,
   })
 
   if (previousMeasurementData === null) return null
