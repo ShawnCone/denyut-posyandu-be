@@ -70,6 +70,7 @@ export type Query = {
   growthGraphStandardData?: Maybe<GrowthGraphStandardDataResponse>
   growthInterpretation?: Maybe<GrowthInterpretationResponse>
   singleMeasurementMonthSKDNData: SingleMeasurementMonthSkdnDataResponse
+  validSKDNMonthYear: Array<SingleMeasurementMonthYear>
   weightGrowthEvaluation?: Maybe<WeightGrowthEvaluationResponse>
 }
 
@@ -89,6 +90,10 @@ export type Query_SingleMeasurementMonthSkdnDataArgs = {
   recordYear: Scalars['Int']['input']
 }
 
+export type Query_ValidSkdnMonthYearArgs = {
+  posyanduId: Scalars['String']['input']
+}
+
 export type Query_WeightGrowthEvaluationArgs = {
   recordId: Scalars['String']['input']
 }
@@ -104,6 +109,12 @@ export type SingleMeasurementMonthSkdnDataResponse = {
   lowWeightCount: Scalars['Int']['output']
   nCount: Scalars['Int']['output']
   sCount: Scalars['Int']['output']
+}
+
+export type SingleMeasurementMonthYear = {
+  __typename?: 'SingleMeasurementMonthYear'
+  monthIdx: Scalars['Int']['output']
+  year: Scalars['Int']['output']
 }
 
 export type SingleMonthGrowthData = {
@@ -245,6 +256,7 @@ export type ResolversTypes = ResolversObject<{
   PreviousGrowthMeasurementData: ResolverTypeWrapper<PreviousGrowthMeasurementData>
   Query: ResolverTypeWrapper<{}>
   SingleMeasurementMonthSKDNDataResponse: ResolverTypeWrapper<SingleMeasurementMonthSkdnDataResponse>
+  SingleMeasurementMonthYear: ResolverTypeWrapper<SingleMeasurementMonthYear>
   SingleMonthGrowthData: ResolverTypeWrapper<SingleMonthGrowthData>
   String: ResolverTypeWrapper<Scalars['String']['output']>
   WeightGrowthEvaluationResponse: ResolverTypeWrapper<WeightGrowthEvaluationResponse>
@@ -260,6 +272,7 @@ export type ResolversParentTypes = ResolversObject<{
   PreviousGrowthMeasurementData: PreviousGrowthMeasurementData
   Query: {}
   SingleMeasurementMonthSKDNDataResponse: SingleMeasurementMonthSkdnDataResponse
+  SingleMeasurementMonthYear: SingleMeasurementMonthYear
   SingleMonthGrowthData: SingleMonthGrowthData
   String: Scalars['String']['output']
   WeightGrowthEvaluationResponse: WeightGrowthEvaluationResponse
@@ -335,6 +348,12 @@ export type QueryResolvers<
       'posyanduId' | 'recordMonthIdx' | 'recordYear'
     >
   >
+  validSKDNMonthYear: Resolver<
+    Array<ResolversTypes['SingleMeasurementMonthYear']>,
+    ParentType,
+    ContextType,
+    RequireFields<Query_ValidSkdnMonthYearArgs, 'posyanduId'>
+  >
   weightGrowthEvaluation: Resolver<
     Maybe<ResolversTypes['WeightGrowthEvaluationResponse']>,
     ParentType,
@@ -357,6 +376,16 @@ export type SingleMeasurementMonthSkdnDataResponseResolvers<
   lowWeightCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   nCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   sCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type SingleMeasurementMonthYearResolvers<
+  ContextType = AuthContext,
+  ParentType extends
+    ResolversParentTypes['SingleMeasurementMonthYear'] = ResolversParentTypes['SingleMeasurementMonthYear'],
+> = ResolversObject<{
+  monthIdx?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -393,6 +422,7 @@ export type Resolvers<ContextType = AuthContext> = ResolversObject<{
   PreviousGrowthMeasurementData?: PreviousGrowthMeasurementDataResolvers<ContextType>
   Query: QueryResolvers<ContextType>
   SingleMeasurementMonthSKDNDataResponse?: SingleMeasurementMonthSkdnDataResponseResolvers<ContextType>
+  SingleMeasurementMonthYear?: SingleMeasurementMonthYearResolvers<ContextType>
   SingleMonthGrowthData?: SingleMonthGrowthDataResolvers<ContextType>
   WeightGrowthEvaluationResponse?: WeightGrowthEvaluationResponseResolvers<ContextType>
 }>
