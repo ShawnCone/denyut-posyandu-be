@@ -1,3 +1,4 @@
+import '@total-typescript/ts-reset'
 import {
   GrowthType,
   PreviousGrowthMeasurementData,
@@ -111,4 +112,92 @@ export async function getMaybePreviousMeasurementRecord({
     measurementDate: previousRecord.measurementDate,
     measurementValue,
   }
+}
+
+// For SKDN data
+type SKDNRecordInfo = {
+  recordId: string
+  weight: number
+  kidId: string
+  measurementDate: string
+  KidInfo: {
+    dateOfBirth: string
+    sex: 'male' | 'female'
+  }
+}[]
+
+type GetKidListInPosyanduParams = {
+  supabase: DenyutPosyanduSupabaseClient
+  posyanduId: string
+}
+
+async function getKidInfoInPosyandu({
+  supabase,
+  posyanduId,
+}: GetKidListInPosyanduParams) {
+  const { data: kidList, error } = await supabase
+    .from('OutpostKids')
+    .select('KidInfo(sex, dateOfBirth, id)')
+    .eq('outpostId', posyanduId)
+
+  if (error) {
+    throw UNABLE_TO_FETCH_DATA_ERROR
+  }
+
+  return kidList.map(cDatum => cDatum.KidInfo).filter(Boolean)
+}
+
+type GetPosyanduMonthYearRecordsParams = {
+  supabase: DenyutPosyanduSupabaseClient
+  outpostRecordMonthIdx: number
+  outpostRecordYear: number
+  posyanduId: string
+}
+
+export async function getPosyanduMonthYearRecords({
+  supabase,
+  outpostRecordMonthIdx,
+  outpostRecordYear,
+  posyanduId,
+}: GetPosyanduMonthYearRecordsParams): Promise<SKDNRecordInfo> {
+  // Maybe able to be optimized by inserting posyandu kids list in the param
+  const posyanduKidInfos = await getKidInfoInPosyandu({ supabase, posyanduId })
+
+  const { data: posyanduMonthYearRecords, error } = await supabase
+    .from('KidBodilyGrowth')
+    .select(
+      'recordId, weight, kidId, measurementDate, KidInfo(dateOfBirth, sex)',
+    )
+    .eq('posyanduId', posyanduId)
+    .lte('monthIdx', outpostRecordMonthIdx)
+    .lte('year', outpostRecordYear)
+    .in(
+      'kidId',
+      posyanduKidInfos.map(kid => kid.id),
+    )
+
+  if (error) {
+    throw UNABLE_TO_FETCH_DATA_ERROR
+  }
+
+  if (!posyanduMonthYearRecords) {
+    throw DATA_NOT_FOUND_ERROR
+  }
+
+  // Kidinfo must be not null, filter out if null
+  const skdnRecordInfoArr: SKDNRecordInfo = []
+  for (const cRecord of posyanduMonthYearRecords) {
+    if (cRecord.KidInfo === null) {
+      continue
+    }
+    skdnRecordInfoArr.push({
+      recordId: cRecord.recordId,
+      weight: cRecord.weight,
+      kidId: cRecord.kidId,
+      measurementDate: cRecord.measurementDate,
+      KidInfo: cRecord.KidInfo,
+    })
+  }
+
+  return skdnRecordInfoArr
 }

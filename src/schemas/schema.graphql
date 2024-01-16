@@ -45,6 +45,18 @@ type WeightGrowthEvaluationResponse {
   targetIncrease: Float!
 }
 
+type SingleMeasurementMonthSKDNDataResponse {
+  dCount: Int!
+  sCount: Int!
+  kCount: Int!
+  nCount: Int!
+  S36Count: Int!
+  LCount: Int!
+  goodWeightCount: Int!
+  lessWeightCount: Int!
+  lowWeightCount: Int!
+}
+
 type Query {
   growthInterpretation(
     recordId: String!
@@ -55,4 +67,9 @@ type Query {
     growthType: GrowthType!
   ): GrowthGraphStandardDataResponse # Data can be not available
   weightGrowthEvaluation(recordId: String!): WeightGrowthEvaluationResponse
+  singleMeasurementMonthSKDNData(
+    posyanduId: String!
+    recordMonthIdx: Int!
+    recordYear: Int!
+  ): SingleMeasurementMonthSKDNDataResponse!
 }

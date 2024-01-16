@@ -48,3 +48,21 @@ export const INVALID_MONTH_OLD_ERROR = new GraphQLError(
     },
   },
 )
+
+export const NO_MEASUREMENT_RECORDS_FOUND = new GraphQLError(
+  'No measurement records found.',
+  {
+    extensions: {
+      code: 'INVALID_MONTH_OLD',
+    },
+  },
+)
+
+export const UNABLE_TO_GENERATE_SKDN_REPORT = new GraphQLError(
+  'Unable to generate SKDN report.',
+  {
+    extensions: {
+      code: 'UNABLE_TO_GENERATE_SKDN_REPORT',
+    },
+  },
+)
