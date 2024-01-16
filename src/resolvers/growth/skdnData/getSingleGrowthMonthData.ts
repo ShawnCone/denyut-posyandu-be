@@ -39,6 +39,7 @@ export async function getSingleGrowthMonthData({
     outpostRecordYear: recordYear,
     posyanduId,
   })
+  console.log({ growthRecords })
 
   // dCount: Unique kid id count
   const dCount = new Set(growthRecords.map(cRecord => cRecord.kidId)).size

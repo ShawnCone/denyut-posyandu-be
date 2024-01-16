@@ -168,9 +168,8 @@ export async function getPosyanduMonthYearRecords({
     .select(
       'recordId, weight, kidId, measurementDate, KidInfo(dateOfBirth, sex)',
     )
-    .eq('posyanduId', posyanduId)
-    .lte('monthIdx', outpostRecordMonthIdx)
-    .lte('year', outpostRecordYear)
+    .lte('outpostRecordMonthIdx', outpostRecordMonthIdx)
+    .lte('outpostRecordYear', outpostRecordYear)
     .in(
       'kidId',
       posyanduKidInfos.map(kid => kid.id),
