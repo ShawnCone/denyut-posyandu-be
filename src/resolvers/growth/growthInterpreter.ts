@@ -2,15 +2,15 @@ import { differenceInCalendarMonths } from 'date-fns'
 import {
   GrowthInterpretationSeverity,
   GrowthType,
-} from '../../../generated/graphql'
-import { INVALID_MONTH_OLD_ERROR } from '../../errors'
-import { SexType } from '../../utils/supabase'
+} from '../../generated/graphql'
+import { INVALID_MONTH_OLD_ERROR } from '../errors'
+import { SexType } from '../utils/supabase'
 import {
   GROWTH_STDEV_DATA_OBJECT,
   GrowthStandardDeviationLevel,
   GrowthStandardDeviationsMap,
   ValidAgeInMonths,
-} from '../growthSTDEVData'
+} from './growthSTDEVData'
 
 function getValidAgeInMonths(ageInMonths: number): ValidAgeInMonths {
   if (ageInMonths < 0) {
@@ -125,9 +125,9 @@ function getHeightSeverityAndLabel(inZone: StandardDeviationZone): {
   }
 }
 
-function getWeightSeverityAndLabel(
-  inZone: StandardDeviationZone,
-): GrowthInterpreterOutput {
+export const BAWAH_GARIS_MERAH_LABEL = 'Bawah Garis Merah (BGM)'
+
+function getWeightSeverityAndLabel(inZone: StandardDeviationZone) {
   if (inZone === '> SD3' || inZone === 'SD2 - SD3') {
     return {
       severity: GrowthInterpretationSeverity.Severe,
@@ -165,7 +165,7 @@ function getWeightSeverityAndLabel(
 
   return {
     severity: GrowthInterpretationSeverity.Severe,
-    label: 'Bawah Garis Merah (BGM)',
+    label: BAWAH_GARIS_MERAH_LABEL,
   }
 }
 

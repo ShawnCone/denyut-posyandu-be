@@ -1,7 +1,7 @@
 import { Resolvers } from '../../../generated/graphql'
 import { checkTokenExists } from '../../errors'
 import { getSupabaseClient } from '../../utils/supabase'
-import { getKidAgeInMonths } from '../growthInterpretation/growthInterpreter'
+import { getKidAgeInMonths } from '../growthInterpreter'
 import { getRecordInfo } from '../queries'
 import { getGraphStandardData } from './utils'
 

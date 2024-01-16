@@ -1,7 +1,14 @@
-import { GrowthType, Resolvers } from '../../../generated/graphql'
+import {
+  GrowthType,
+  Resolvers,
+  WeightGrowthEvaluationResponse,
+} from '../../../generated/graphql'
 import { checkTokenExists } from '../../errors'
-import { getSupabaseClient } from '../../utils/supabase'
-import { getKidAgeInMonths } from '../growthInterpretation/growthInterpreter'
+import {
+  DenyutPosyanduSupabaseClient,
+  getSupabaseClient,
+} from '../../utils/supabase'
+import { getKidAgeInMonths } from '../growthInterpreter'
 import { getMaybePreviousMeasurementRecord, getRecordInfo } from '../queries'
 import { getRequiredWeightIncreaseForMonth } from './utils'
 
@@ -31,23 +38,49 @@ const resolver: Resolvers['Query']['weightGrowthEvaluation'] = async (
     recordInfo.measurementDate,
   )
 
+  return await getWeightGrowthEvaluation({
+    supabase,
+    outpostRecordMonthIdx: recordInfo.outpostRecordMonthIdx,
+    outpostRecordYear: recordInfo.outpostRecordYear,
+    kidAgeInMonths,
+    kidId: recordInfo.kidInfo.id,
+    currentWeight: recordInfo.measurementValue,
+  })
+}
+
+type GetWeightGrowthEvaluationParams = {
+  outpostRecordMonthIdx: number
+  outpostRecordYear: number
+  supabase: DenyutPosyanduSupabaseClient
+  kidAgeInMonths: number
+  kidId: string
+  currentWeight: number
+}
+
+export async function getWeightGrowthEvaluation({
+  supabase,
+  outpostRecordMonthIdx,
+  outpostRecordYear,
+  kidAgeInMonths,
+  currentWeight,
+  kidId,
+}: GetWeightGrowthEvaluationParams): Promise<WeightGrowthEvaluationResponse | null> {
   const targetIncrease = getRequiredWeightIncreaseForMonth(kidAgeInMonths)
   if (targetIncrease === null) return null
 
   // Get previous month record and calculate diff (if applicable) (Use outpost month and year - 1)
   const previousMeasurementData = await getMaybePreviousMeasurementRecord({
     supabase,
-    outpostRecordMonthIdx: recordInfo.outpostRecordMonthIdx,
-    outpostRecordYear: recordInfo.outpostRecordYear,
+    outpostRecordMonthIdx: outpostRecordMonthIdx,
+    outpostRecordYear: outpostRecordYear,
     growthType: GrowthType.Weight,
-    kidId: recordInfo.kidInfo.id,
+    kidId: kidId,
   })
 
   if (previousMeasurementData === null) return null
 
   const increaseInWeightGrams =
-    recordInfo.measurementValue * 1000 -
-    previousMeasurementData.measurementValue * 1000
+    currentWeight * 1000 - previousMeasurementData.measurementValue * 1000
 
   // Get the standard data given kid age month plus minus 5 months
   return {

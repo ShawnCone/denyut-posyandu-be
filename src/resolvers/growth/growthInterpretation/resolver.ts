@@ -1,11 +1,11 @@
 import { Resolvers } from '../../../generated/graphql'
 import { checkTokenExists } from '../../errors'
 import { getSupabaseClient } from '../../utils/supabase'
-import { getMaybePreviousMeasurementRecord, getRecordInfo } from '../queries'
 import {
   getGrowthLabelAndSeverity,
   getKidAgeInMonths,
-} from './growthInterpreter'
+} from '../growthInterpreter'
+import { getMaybePreviousMeasurementRecord, getRecordInfo } from '../queries'
 
 const resolver: Resolvers['Query']['growthInterpretation'] = async (
   _,
