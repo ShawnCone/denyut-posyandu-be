@@ -131,7 +131,7 @@ type GetKidListInPosyanduParams = {
   posyanduId: string
 }
 
-async function getKidInfoInPosyandu({
+export async function getKidInfosInPosyandu({
   supabase,
   posyanduId,
 }: GetKidListInPosyanduParams) {
@@ -161,7 +161,7 @@ export async function getPosyanduMonthYearRecords({
   posyanduId,
 }: GetPosyanduMonthYearRecordsParams): Promise<SKDNRecordInfo> {
   // Maybe able to be optimized by inserting posyandu kids list in the param
-  const posyanduKidInfos = await getKidInfoInPosyandu({ supabase, posyanduId })
+  const posyanduKidInfos = await getKidInfosInPosyandu({ supabase, posyanduId })
 
   const { data: posyanduMonthYearRecords, error } = await supabase
     .from('KidBodilyGrowth')

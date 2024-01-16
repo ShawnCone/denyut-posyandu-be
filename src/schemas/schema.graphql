@@ -57,6 +57,11 @@ type SingleMeasurementMonthSKDNDataResponse {
   lowWeightCount: Int!
 }
 
+type SingleMeasurementMonthYear {
+  monthIdx: Int!
+  year: Int!
+}
+
 type Query {
   growthInterpretation(
     recordId: String!
@@ -72,4 +77,5 @@ type Query {
     recordMonthIdx: Int!
     recordYear: Int!
   ): SingleMeasurementMonthSKDNDataResponse!
+  validSKDNMonthYear(posyanduId: String!): [SingleMeasurementMonthYear!]! # To be considered a valid monthYear, must have at least 1 measurement
 }
